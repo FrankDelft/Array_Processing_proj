@@ -1,13 +1,10 @@
 
 function [X,A,S] = gen_data(M,N,delta,theta,f,SNR)
-    
-    
-    
     % Initialize matrices
-    X = zeros(M, N);
-    A = zeros(M, length(theta));
-    S = zeros(length(theta), N);
     num_sources=length(theta);
+    X = zeros(M, N);
+    A = zeros(M, num_sources);
+    S = zeros(length(theta), N);
     Noise=zeros(M,N);
     
     % Generate the signals and array responses
@@ -21,7 +18,7 @@ function [X,A,S] = gen_data(M,N,delta,theta,f,SNR)
         end
         for m = 1:M
             % Calculate array response
-            A(m, d) = exp(1i * 2 * pi * delta * sin(theta(d)));
+            A(m, d) = exp((m-1)*1i * 2 * pi * delta * sin(theta(d)));
         end
     end
 
