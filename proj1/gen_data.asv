@@ -1,0 +1,41 @@
+function [X, A, S] = gen_data(M, N, delta, theta, f, SNR)
+    % Number of sources
+    num_sources = length(theta);
+
+    % Initialize matrices
+    X = zeros(M, N);
+    A = zeros(M, num_sources);
+    S = zeros(num_sources, N);
+    
+    % Generate the signals and array responses
+    for d = 1:num_sources
+        % Calculate signal amplitude based on SNR
+        SNR_linear = 10^(SNR(d) / 10);
+        amplitude = sqrt(SNR_linear);
+        for n = 1:N
+            % Generate signal
+            S(d, n) = amplitude * exp(1i * 2 * pi * f(d) * n);
+        end
+        for m = 1:M
+            % Calculate array response
+            A(m, d) = exp(1i * 2 * pi * delta * sin(theta(d)));
+        end
+    end
+
+    % Generate the received signal matrix X
+    X = A * S;
+
+    % Generate complex Gaussian noise with unit variance
+    noise = (randn(M, N) + 1i * randn(M, N)) / sqrt(2);
+    
+    % Scale noise to match the desired SNR
+    noise_power = mean(abs(noise(:)).^2); % Should be 1
+    signal_power = mean(abs(X(:)).^2);
+    desired_noise_power = signal_power / SNR_linear;
+    noise = noise * sqrt(desired_noise_power / noise_power);
+    
+    % Add the noise to the signal
+    X = X + noise;
+end
+
+
