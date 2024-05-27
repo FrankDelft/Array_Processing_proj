@@ -1,4 +1,4 @@
-
+%assumes the narrowband model
 function [X,A,S] = gen_data(M,N,delta,theta,f,SNR)
     % Initialize matrices
     num_sources=length(theta);
