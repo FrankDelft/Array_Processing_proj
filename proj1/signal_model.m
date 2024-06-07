@@ -1,3 +1,4 @@
+clear all;
 % Test parameters
 M = 5; % Number of antennas
 N = 20; % Number of samples
@@ -25,7 +26,7 @@ M = 5; theta = [-5 * (pi/180); 10 * (pi/180)];
 [~, Singular_angle] = svd(X_angle);
 
 % Make frequencies closer
-theta = [-20 * (pi/180); 30 * (pi/180)]; f = [0.27; 0.3];
+theta = [-20 * (pi/180); 30 * (pi/180)]; f = [0.29; 0.3];
 [X_freq, ~, ~] = gen_data(M, N, 0.5, theta, f, SNR);
 [~, Singular_freq] = svd(X_freq);
 
