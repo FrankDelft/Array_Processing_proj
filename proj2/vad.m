@@ -1,7 +1,7 @@
 % Voice Activity Detection
 function vadResult = vad(S, threshold)
     % Compute energy of each frame
-    energy = sum(abs(S).^2, 3);
+    energy = sum(abs(S).^2, 1);
 
     % Normalize energy
     energy = energy / max(energy(:));
